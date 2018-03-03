@@ -1,4 +1,4 @@
-package lcdmining;
+package lcdminerstats;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

@@ -1,4 +1,4 @@
-package lcdmining;
+package lcdminerstats;
 
 /**
  *
