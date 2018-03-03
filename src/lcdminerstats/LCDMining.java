@@ -1,7 +1,11 @@
 package lcdminerstats;
 
 import java.util.Timer;
-import jssc.SerialPort;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,17 +17,34 @@ public class LCDMining {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Serial serial = new Serial("/dev/ttyUSB2", SerialPort.BAUDRATE_115200);
-        serial.open();
+        try {
+            FileInputStream in = new FileInputStream("config.properties");
+            Properties props = new Properties();
+            props.load(in);
+            in.close();
 
-        Miner miner = new Miner("ETH", "MH/s", "DCR", "MH/s", 1, serial);
-        miner.connect("192.168.1.122", 3333);
-        miner.parse();
+            Serial serial = new Serial(props.getProperty("serial.port"), 115200);
+            serial.open();
 
-        miner.initDisplay();
+            Miner miner = new Miner(
+                    props.getProperty("currency1.name"),
+                    props.getProperty("currency1.unit"),
+                    props.getProperty("currency2.name"),
+                    props.getProperty("currency2.unit"),
+                    Integer.parseInt(props.getProperty("gpus")),
+                    serial);
+            miner.connect(
+                    props.getProperty("host.ip"),
+                    Integer.parseInt(props.getProperty("host.port")));
+            miner.parse();
 
-        Timer timer = new Timer();
-        timer.schedule(new RefreshTimer(miner), 0, 10000);
+            miner.initDisplay();
+
+            Timer timer = new Timer();
+            timer.schedule(new RefreshTimer(miner), 0, Integer.parseInt(props.getProperty("refreshrate")));
+        } catch (IOException ex) {
+            Logger.getLogger(LCDMining.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
