@@ -22,9 +22,11 @@ public class LCDMining {
             Properties props = new Properties();
             props.load(in);
             in.close();
+            System.out.println("Config successfully loaded");
 
             Serial serial = new Serial(props.getProperty("serial.port"), 115200);
             serial.open();
+            System.out.println("Serial port " + props.getProperty("serial.port") + " opened");
 
             Miner miner = new Miner(
                     props.getProperty("currency1.name"),
@@ -37,8 +39,10 @@ public class LCDMining {
                     props.getProperty("host.ip"),
                     Integer.parseInt(props.getProperty("host.port")));
             miner.parse();
+            System.out.println("Miner on " + props.getProperty("host.ip") + ":" + props.getProperty("host.port") + " initialized");
 
             miner.initDisplay();
+            System.out.println("Refresh rate:" + props.getProperty("refreshrate") + "ms");
 
             Timer timer = new Timer();
             timer.schedule(new RefreshTimer(miner), 0, Integer.parseInt(props.getProperty("refreshrate")));
