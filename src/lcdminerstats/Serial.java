@@ -31,8 +31,7 @@ public class Serial {
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
 
-            serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN
-                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+            serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
             TimeUnit.SECONDS.sleep(3); //Wait until Arduino bootup
         } catch (SerialPortException | InterruptedException ex) {
             Logger.getLogger(Serial.class.getName()).log(Level.SEVERE, null, ex);
