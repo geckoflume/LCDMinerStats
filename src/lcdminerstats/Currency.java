@@ -11,9 +11,11 @@ public class Currency {
     private int shares;
     private int rejected;
     private int invalid;
+    private final String unit;
 
-    public Currency(String name) {
+    public Currency(String name, String unit) {
         this.name = name;
+        this.unit = unit;
     }
 
     public int getHr() {
@@ -48,4 +50,11 @@ public class Currency {
         this.invalid = invalid;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
 }

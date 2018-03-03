@@ -14,9 +14,11 @@ public class Serial {
 
     private final String port;
     private SerialPort serialPort;
+    private final int baud;
 
-    public Serial(String port) {
+    public Serial(String port, int baud) {
         this.port = port;
+        this.baud = baud;
     }
 
     public void open() {
@@ -24,7 +26,7 @@ public class Serial {
             serialPort = new SerialPort(port);
             serialPort.openPort();
 
-            serialPort.setParams(SerialPort.BAUDRATE_115200,
+            serialPort.setParams(this.baud,
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
@@ -39,11 +41,15 @@ public class Serial {
 
     public boolean send(String s) {
         try {
-            serialPort.writeString(s + '\r');
+            serialPort.writeString(s + '\n');
             return true;
         } catch (SerialPortException ex) {
             Logger.getLogger(Serial.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public boolean sendVar(SerialVars var, String value) {
+        return this.send(var.getVarId() + ";" + value);
     }
 }
