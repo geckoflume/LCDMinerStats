@@ -20,7 +20,7 @@ public class Parse {
         this.errstat = "";
     }
 
-    void parseResult(String json) {
+    public void parseResult(String json) {
         Gson gson = new Gson();
 
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();

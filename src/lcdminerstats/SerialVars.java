@@ -21,7 +21,6 @@ public enum SerialVars {
     TEMP("13"),
     FAN("14"),
     REFRESH("15");
-    ;
 
     private final String varId;
 

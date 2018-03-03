@@ -16,12 +16,12 @@ public class Connexion {
     private String ip;
     private int port;
 
-    Connexion(String ip, int port) {
+    public Connexion(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
 
-    String request() {
+    public String request() {
         try {
             Socket sock = new Socket(this.ip, this.port);
             String request = "{\"id\":0,\"jsonrpc\":\"2.0\",\"method\":\"miner_getstat1\"}\r\n";
